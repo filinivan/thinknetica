@@ -6,10 +6,18 @@ puts 'Сторона 3'
 c = gets.chomp.to_i
 
 
-if a**2 == (b**2) + (c**2) || b**2 == (a**2) + (c**2) || c**2 == (a**2) + (b**2)
-	rectangular = true
-else 
-	rectangular = false	
+# if a**2 == (b**2) + (c**2) || b**2 == (a**2) + (c**2) || c**2 == (a**2) + (b**2)
+# 	rectangular = true
+# else 
+# 	rectangular = false	
+# end
+
+if a > b && a > c 
+  rectangular = a**2 == (b**2) + (c**2)
+elsif b > a && b > c 
+  rectangular = b**2 == (a**2) + (c**2)
+else
+  rectangular = c**2 == (a**2) + (b**2)
 end
 
 if a == b && b == c

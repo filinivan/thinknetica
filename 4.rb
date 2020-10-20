@@ -10,7 +10,7 @@ d = (b**2) - 4*a*c
 if d < 0
     puts "Корней нет"
 elsif d == 0
-    root = (-b + Math.sqrt(d)) / (2 * a)
+    root = -b / (2 * a)
     puts "Дискриминант : #{d}. Корень : #{root}"
 else
     disc = Math.sqrt(d)
@@ -18,3 +18,4 @@ else
     root2 = (-b - disc) / (2 * a)
     puts "Дискриминант : #{d}. Первый корень : #{root1}, второй корень : #{root2}"
 end
+
