@@ -8,14 +8,14 @@ c = gets.chomp.to_i
 d = (b**2) - 4*a*c 
 
 if d < 0
-    puts "Корней нет"
+  puts "Корней нет"
 elsif d == 0
-    root = -b / (2 * a)
-    puts "Дискриминант : #{d}. Корень : #{root}"
+  root = -b / (2 * a)
+  puts "Дискриминант : #{d}. Корень : #{root}"
 else
-    disc = Math.sqrt(d)
-    root1 = (-b + disc) / (2 * a)
-    root2 = (-b - disc) / (2 * a)
-    puts "Дискриминант : #{d}. Первый корень : #{root1}, второй корень : #{root2}"
+  disc = Math.sqrt(d)
+  root1 = (-b + disc) / (2 * a)
+  root2 = (-b - disc) / (2 * a)
+  puts "Дискриминант : #{d}. Первый корень : #{root1}, второй корень : #{root2}"
 end
 
