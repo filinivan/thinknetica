@@ -14,8 +14,14 @@ if year % 4 == 0 || (year % 100 != 0 && year % 400 == 0)
 end
 
 #Цикл подсчёта номера дня
-i = 0
-while i <= month do
+# i = 0
+# while i <= month do
+#   day += arr[i]
+#   i += 1
+# end
+
+
+0.upto(month) do |i|
   day += arr[i]
   i += 1
 end
