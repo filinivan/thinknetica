@@ -1,8 +1,3 @@
-number = 10
-arr = []
-while number < 101 do
-  arr << number
-  number += 5
-end
+arr = (10..100).step(5).to_a 
 
 puts arr
