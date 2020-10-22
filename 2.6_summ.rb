@@ -16,8 +16,10 @@ loop do
   order[product] = {cost: price, quantity: product_quantity} 
 end
 
-order.each_value do |value|
-  cart += value[:cost] * value[:quantity]
+order.each_pair do |key, value|
+  summ = value[:cost] * value[:quantity]
+  cart += summ
+  puts "#{key} = #{summ}"
 end
 
 puts order
