@@ -17,7 +17,7 @@ loop do
 end
 
 order.each_value do |value|
-  cart += (value[:cost]) * (value[:quantity])
+  cart += value[:cost] * value[:quantity]
 end
 
 puts order
