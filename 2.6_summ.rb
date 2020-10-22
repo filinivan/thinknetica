@@ -13,7 +13,7 @@ loop do
   puts 'Введите количество: '
   product_quantity = gets.chomp.to_i
 
-  order[product] = {cost: price, quantity: product_quantity} 
+  order[product] = { cost: price, quantity: product_quantity } 
 end
 
 order.each_pair do |key, value|
