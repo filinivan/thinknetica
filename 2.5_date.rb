@@ -1,7 +1,7 @@
 puts "Введите число: "
 day = gets.chomp.to_i
 puts "Введите месяц: "
-month = gets.chomp.to_i - 2 
+month = gets.chomp.to_i - 1 
 puts "Введите год: "
 year = gets.chomp.to_i
 
@@ -14,9 +14,11 @@ if year % 4 == 0 || (year % 100 != 0 && year % 400 == 0)
 end
 
 #Цикл подсчёта количества дней
-0.upto(month) do |i|
-  day += arr[i]
-  i += 1
-end
+# 0.upto(month) do |i|
+#   day += arr[i]
+#   i += 1
+# end
+
+day += arr.take(month).sum 
 
 puts day

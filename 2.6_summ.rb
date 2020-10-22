@@ -1,4 +1,4 @@
-order = Hash.new
+order = {}
 product = 'Empty'
 cart = 0.0
 
