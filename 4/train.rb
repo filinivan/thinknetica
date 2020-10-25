@@ -1,5 +1,5 @@
 class Train 
-  attr_reader :point, :type, :number, :speed, :wagons
+  attr_reader :point, :type, :number, :speed, :wagons, :current_station
 
   def initialize(number, type, wagons)
     @number = number
@@ -21,36 +21,37 @@ class Train
   end 
 
   def wagons_hook
-    @wagons += 1
+    @wagons += 1 if @speed == 0
     puts "Число вагонов = #{@wagons}"
   end 
 
   def wagons_unhook
-    @wagons -= 1
+    @wagons -= 1 if @speed == 0
     puts "Число вагонов = #{@wagons}"
   end
 
   def set_route(route)        #Установка маршрута 
     @route = route
     @current_station_index = 0               
-    @current_station = @route.stations[0]
+    @current_station = @route.stations[@current_station_index]
     @current_station.add_train(self)
-    puts "Поезд находится на станции #{@current_station}"
   end
 
-  def forward #На одну станцию вперёд
+  def move_forvard 
+    @current_station.del_train(self)
     @current_station = @route.stations[@current_station_index += 1]
-    puts "Поезд приехал на станцию #{@current_station}"
+    @current_station.add_train(self)
   end
 
-  def backward #Возврат на одну станцию назад
+  def move_back 
     @current_station = @route.stations[@current_station_index -= 1]
-    puts "Поезд приехал на станцию #{@current_station}"
   end
 
-  def navigate #Показывает текущую, предыдущую и следующую станцию на маршруте
-    puts "Текущая станция - #{@route.stations[@current_station_index]}"
-    puts "Предыдущая станция - #{@route.stations[@current_station_index - 1]}"
-    puts "Следующая станция - #{@route.stations[@current_station_index + 1]}"
+  def next_station
+    @route.stations[@current_station_index + 1]
+  end
+
+  def previous_station
+    @route.stations[@current_station_index - 1]
   end 
 end 
