@@ -8,12 +8,16 @@ class Train
     @speed = 0
   end 
 
-  def speed_up(speed)   
+  def speed_up(speed)    #Разгон поезда (значение указывается  вручную)
     @speed += speed
   end 
 
-  def speed_down          
-    @speed = 0
+  def speed_down          #Остановка поезда
+    loop do 
+      @speed -= 1         #Знаю, что излишне)) Балуюсь.
+      break if speed == 0
+    end
+    puts "Поезд остановлен"  
   end 
 
   def wagons_hook

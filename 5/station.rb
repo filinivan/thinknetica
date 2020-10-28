@@ -19,6 +19,11 @@ class Station
   end
 
   def number_of_trains_by_type(type)
+    # quantity = 0
+    # @trains.each do |train|
+    #   quantity += 1 if train.type == type
+    # end
+    # puts quantity
     quantity = @trains.count {|item| item.type == type}
     puts quantity
   end
