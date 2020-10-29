@@ -1,6 +1,6 @@
 class TrainPassenger < Train 
   def wagons_hook(wagon)
-    if wagon.type == 'passenger'
+    if wagon.class == 'PassengerWagon'
       super
     else
       puts "Incorrect wagon type"
@@ -8,10 +8,12 @@ class TrainPassenger < Train
   end 
 
   def wagons_unhook(wagon)
-    if wagon.type == 'passenger'
+    if wagon.type == 'PassengerWagon'
       super
     else
       puts "Incorrect wagon type"
     end 
   end
 end
+
+# train2 = TrainPassenger.new(555)

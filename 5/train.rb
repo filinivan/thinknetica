@@ -1,10 +1,9 @@
 class Train 
-  attr_reader :point, :type, :number, :speed, :wagons, :current_station
+  attr_reader :number, :speed, :wagons, :current_station
 
-  def initialize(number, type, wagons)
+  def initialize(number)
     @number = number
-    @type = type
-    @wagons = wagons
+    @wagons = []
     @speed = 0
   end 
 
@@ -19,16 +18,6 @@ class Train
     end
     puts "Поезд остановлен"  
   end 
-
-  def wagons_hook
-    @wagons += 1 if @speed == 0
-    puts "Число вагонов = #{@wagons}"
-  end 
-
-  def wagons_unhook
-    @wagons -= 1 if @speed == 0
-    puts "Число вагонов = #{@wagons}"
-  end
 
   def set_route(route)        #Установка маршрута 
     @route = route
@@ -55,3 +44,13 @@ class Train
     @route.stations[@current_station_index - 1]
   end 
 end 
+
+protected_methods
+
+def wagons_hook
+  @wagons << wagon if @speed == 0
+end 
+
+def wagons_unhook
+  @wagons.delete(wagon) if @speed == 0
+end
