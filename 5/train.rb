@@ -43,14 +43,17 @@ class Train
   def previous_station
     @route.stations[@current_station_index - 1]
   end 
+
+  protected
+
+  def wagons_hook
+    @wagons << wagon if @speed == 0
+  end 
+
+  def wagons_unhook
+    @wagons.delete(wagon) if @speed == 0
+  end
+
 end 
 
-protected_methods
 
-def wagons_hook
-  @wagons << wagon if @speed == 0
-end 
-
-def wagons_unhook
-  @wagons.delete(wagon) if @speed == 0
-end
