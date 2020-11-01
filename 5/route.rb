@@ -1,8 +1,9 @@
 class Route
-  attr_reader :stations
+  attr_reader :stations, :name
 
   def initialize(first, last)
-    @stations = [first, last]      # Если сделать @stations << [first, last] то ругается (undefined method `<<' for nil:NilClass)
+    @name = "#{first.name} - #{last.name}"
+    @stations = [first, last]     
   end 
 
   def station_add(station)
@@ -14,6 +15,6 @@ class Route
   end 
 
   def station_list
-    @stations.each { |station| puts station }
+    @stations.each { |station| puts station.name }
   end 
 end 

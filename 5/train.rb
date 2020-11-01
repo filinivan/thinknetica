@@ -7,19 +7,19 @@ class Train
     @speed = 0
   end 
 
-  def speed_up(speed)    #Разгон поезда (значение указывается  вручную)
+  def speed_up(speed)   
     @speed += speed
   end 
 
-  def speed_down          #Остановка поезда
+  def speed_down          
     loop do 
-      @speed -= 1         #Знаю, что излишне)) Балуюсь.
+      @speed -= 1         
       break if speed == 0
     end
     puts "Поезд остановлен"  
   end 
 
-  def set_route(route)        #Установка маршрута 
+  def set_route(route)      
     @route = route
     @current_station_index = 0               
     @current_station = @route.stations[@current_station_index]
@@ -44,14 +44,8 @@ class Train
     @route.stations[@current_station_index - 1]
   end 
 
-  protected
-
-  def wagons_hook
-    @wagons << wagon if @speed == 0
-  end 
-
   def wagons_unhook
-    @wagons.delete(wagon) if @speed == 0
+    @wagons.delete_at(0) if @speed == 0
   end
 
 end 

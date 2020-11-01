@@ -3,5 +3,9 @@ require_relative 'station'
 require_relative 'train'
 require_relative 'train_cargo'
 require_relative 'train_passenger'
+require_relative 'wagon_cargo'
+require_relative 'wagon_passenger'
+require_relative 'interface'
 
-train1 = Train.new(666, 'cargo', 5)
+interface = Interface.new
+interface.start

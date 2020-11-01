@@ -1,5 +1,5 @@
 class Station
-  attr_reader :name
+  attr_reader :name, :trains
   
   def initialize(name)
     @name = name
@@ -15,16 +15,12 @@ class Station
   end 
 
   def show_all
-    @trains.each {|train| puts train}
+    @trains.each {|train| puts "#{train.number} - #{train.class}"}
   end
 
-  def number_of_trains_by_type(type)
-    # quantity = 0
-    # @trains.each do |train|
-    #   quantity += 1 if train.type == type
-    # end
-    # puts quantity
-    quantity = @trains.count {|item| item.type == type}
-    puts quantity
+  def trains_by_type(type)
+    @trains.each do |train|
+      puts train if train.class.to_s == type
+    end 
   end
 end
