@@ -1,9 +1,17 @@
 class Station
   attr_reader :name, :trains
-  
+  @@stations = []
+  include InstanceCounter
+
   def initialize(name)
     @name = name
     @trains = []
+    @@stations << self
+    register_instance
+  end
+
+  def self.all
+    @@stations.each.with_index(1) {|station, x| puts "#{x} - #{station.name}"}
   end
 
   def add_train(train)
@@ -23,4 +31,5 @@ class Station
       puts train if train.class.to_s == type
     end 
   end
+
 end

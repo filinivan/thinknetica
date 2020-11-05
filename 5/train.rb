@@ -1,12 +1,20 @@
 class Train 
   attr_reader :number, :speed, :wagons, :current_station
   include Company
+  include InstanceCounter
+  @@trains = {}
 
   def initialize(number)
     @number = number
     @wagons = []
     @speed = 0
+    @@trains[self.number] = self
+    register_instance
   end 
+
+  def self.find(number)
+    @@trains[number]
+  end
 
   def speed_up(speed)   
     @speed += speed

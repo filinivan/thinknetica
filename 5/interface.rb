@@ -23,27 +23,28 @@ class Interface
 
       input = gets.chomp.to_i
 
-      if input == 1
+      case input
+      when 1
         create_new_station
-      elsif input == 2
+      when 2
         create_new_train
-      elsif input == 3
+      when 3
         create_new_route
-      elsif input == 4
+      when 4
         control_route
-      elsif input == 5
+      when 5
         set_route
-      elsif input == 6
+      when 6
         wagons_hook
-      elsif input == 7
+      when 7
         wagons_unhook
-      elsif input == 8
+      when 8
         control_train
-      elsif input == 9
+      when 9
         show_stations
-      elsif input == 10
+      when 10
         show_station_trains
-      elsif input == 0
+      when 0
         break
       else
         puts 'Неверное значение!'
@@ -52,6 +53,10 @@ class Interface
   end
 
   private
+
+  def show_all_stations
+    Station.all
+  end
 
   def create_new_station
     print 'Введите название станции: '
@@ -171,6 +176,10 @@ class Interface
   def show_stations
     @stations.each.with_index(1) { |station, x| puts "#{x}. #{station.name} | поездов #{station.trains.size}" }
   end
+
+  def show_all_stations
+    @@stations.each.with_index(1) { |station, x| puts "#{x}. #{station.name} | поездов #{station.trains.size}" }
+  end  
 
   def show_station_trains
     puts 'Выберите станцию'
