@@ -1,0 +1,191 @@
+class Interface
+  
+  def initialize
+    @trains = []
+    @routes = []
+    @stations = []
+  end
+
+  def start
+    loop do
+      puts '1. Создать станцию'
+      puts '2. Создать поезд'
+      puts '3. Создать маршрут'
+      puts '4. Управлять маршрутом'
+      puts '5. Установить маршрут'
+      puts '6. Прицепить вагон'
+      puts '7. Отцепить вагон'
+      puts '8. Двигать поезд по маршруту'
+      puts '9. Все станции на маршруте'
+      puts '10. Показать все поезда на конкретной станции'
+      puts '0 Для выхода'
+      puts 'Выберите пункт: '
+
+      input = gets.chomp.to_i
+
+      case input
+      when 1
+        create_new_station
+      when 2
+        create_new_train
+      when 3
+        create_new_route
+      when 4
+        control_route
+      when 5
+        set_route
+      when 6
+        wagons_hook
+      when 7
+        wagons_unhook
+      when 8
+        control_train
+      when 9
+        show_stations
+      when 10
+        show_station_trains
+      when 0
+        break
+      else
+        puts 'Неверное значение!'
+      end 
+    end
+  end
+
+  private
+
+  def show_all_stations
+    Station.all
+  end
+
+  def create_new_station
+    print 'Введите название станции: '
+    name = gets.chomp
+    @stations << Station.new(name)
+  end
+
+  def create_new_train
+    begin
+      puts "Создаётся грузовой поезд? yes/no"
+      cargo = gets.chomp
+      print 'Введите номер поезда '
+      number = gets.chomp
+      if cargo == 'yes'
+        @trains << TrainCargo.new(number)
+      else
+        @trains << TrainPassenger.new(number)
+      end
+    rescue RuntimeError => e
+      puts e.message
+      retry
+    end
+      puts "Поезд  с номером #{number} создан"
+  end
+
+  def create_new_route
+    i = 1
+    @stations.each do |station|
+      puts "#{i} - #{station.name}"
+      i += 1
+    end 
+    puts 'Укажите начальную станцию '
+    first = gets.to_i - 1
+    puts 'Укажите конечную станцию '
+    last = gets.to_i - 1
+    route = Route.new(@stations[first], @stations[last])
+    @routes << route
+  end
+
+  def control_route
+    puts 'Выберите маршрут'
+    show_routes
+    route = @routes[gets.to_i - 1]
+    puts "Выбран маршрут #{route.name}"
+    puts "1. Добавить станцию\n2. Удалить станцию"
+    answer = gets.chomp
+    if answer == '1'
+      puts 'Какую станцию добавить в маршрут?'
+      route.station_list
+      route.station_add(@stations[gets.to_i - 1])
+      puts 'Станция успешно добавлена'
+    elsif answer =='2'
+      puts 'Какую станцию вы хотите удалть из маршрута?'
+      route.station_list
+      route.station_del(route.stations[gets.to_i - 1])
+    end
+  end
+
+  def set_route
+    train = select_train
+
+    puts 'Выберите маршрут'
+    show_routes
+    train.set_route(@routes[gets.to_i - 1])
+    puts "Маршрут поезду #{train.number} успешно указан"
+  end
+
+  def wagons_hook
+    train = select_train
+    print 'Сколько вагонов вы хотите добавить: '
+    quantity = gets.to_i
+    if train.class == TrainPassenger
+      quantity.times do
+        train.wagons_hook(PassengerWagon.new)
+      end
+    else
+      quantity.times do
+        train.wagons_hook(CargoWagon.new)
+      end
+    end
+  end
+
+  def wagons_unhook
+    train = select_train
+    print 'Сколько вагонов вы хотите отцепить: '
+    quantity = gets.to_i
+    quantity.times do
+      train.wagons_unhook
+    end
+  end
+
+  def control_train
+    train = select_train
+
+    puts "Отправить поезд #{train.number} на станцию\n1. Следующую\n2. Предыдущую"
+    case gets.chomp
+    when '1'
+      train.move_forvard
+    when '2'
+      train.move_back
+    end
+  end
+
+  def select_train
+    puts 'Выберите поезд'
+    trains
+    train = @trains[gets.to_i - 1]
+  end
+
+  def trains
+    @trains.each.with_index(1) {  |train, x| puts "#{x}. #{train.number} | количество вагонов в составе:  #{train.wagons.size} | класс #{train.class}" }
+  end
+
+  def show_routes
+    @routes.each.with_index(1) { |route, x| puts "#{x}. #{route.name}" }
+  end
+
+  def show_stations
+    @stations.each.with_index(1) { |station, x| puts "#{x}. #{station.name} | поездов #{station.trains.size}" }
+  end
+
+  def show_all_stations
+    @@stations.each.with_index(1) { |station, x| puts "#{x}. #{station.name} | поездов #{station.trains.size}" }
+  end  
+
+  def show_station_trains
+    puts 'Выберите станцию'
+    show_stations
+    station = @stations[gets.to_i - 1]
+    station.show_all
+  end
+end
