@@ -62,7 +62,9 @@ class Interface
 
   def create_new_train
     begin
+      puts 'Поезд грузовой? y/n'
       cargo = gets.chomp
+      puts 'Введите номер поезда в формате ХХХ-ХХ или ХХХХХ'
       number = gets.chomp
       if cargo == 'y'
         @trains << TrainCargo.new(number)

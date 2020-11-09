@@ -63,9 +63,7 @@ class Train
   protected
 
   def validate!
-    begin
       raise 'Invalid format of number! Please use format XXX-XX or XXXXX' if @number !~ TRAIN_NUMBER_FORMAT
-    end 
   end
 
 end 
