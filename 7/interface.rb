@@ -41,7 +41,7 @@ class Interface
       when 8
         control_train
       when 9
-        show_stations
+        show_stations_on_route
       when 10
         show_station_trains
       when 0
@@ -54,11 +54,8 @@ class Interface
 
   private
 
-  def show_all_stations
-    Station.all
-  end
-
   def create_new_station
+    puts 'Введите название станции: '
     name = gets.chomp
     @stations << Station.new(name)
   end
@@ -79,10 +76,10 @@ class Interface
   end
 
   def create_new_route
-    i = 1
-    @stations.each do |station|
+    # i = 1
+    @stations.each.with_index(1) do |station, i|
       puts "#{i} - #{station.name}"
-      i += 1
+      # i += 1
     end 
     first = gets.to_i - 1
     last = gets.to_i - 1
@@ -111,6 +108,7 @@ class Interface
 
   def wagons_hook
     train = select_train
+    puts 'Введите количество вагонов: '
     quantity = gets.to_i
     if train.class == TrainPassenger
       quantity.times do
@@ -125,6 +123,7 @@ class Interface
 
   def wagons_unhook
     train = select_train
+    puts 'Введите количество вагонов: '
     quantity = gets.to_i
     quantity.times do
       train.wagons_unhook
@@ -133,6 +132,7 @@ class Interface
 
   def control_train
     train = select_train
+    puts '1 - двигать поезд вперёд, 2 - двигать поезд назад'
     case gets.chomp
     when '1'
       train.move_forvard
@@ -142,6 +142,7 @@ class Interface
   end
 
   def select_train
+    puts 'Выберите поезд: '
     trains
     train = @trains[gets.to_i - 1]
   end
@@ -158,13 +159,16 @@ class Interface
     @stations.each.with_index(1) { |station, x| puts "#{x}. #{station.name} | поездов #{station.trains.size}" }
   end
 
-  def show_all_stations
-    @@stations.each.with_index(1) { |station, x| puts "#{x}. #{station.name} | поездов #{station.trains.size}" }
+  def show_stations_on_route
+    puts 'Укажите маршрут: '
+    @routes.each.with_index(1) { |route, i| puts "#{i} - #{route.name}"}
+    route = @routes[gets.to_i - 1]
+    route.stations.each { |station| puts station.name }
   end  
 
   def show_station_trains
     show_stations
     station = @stations[gets.to_i - 1]
-    station.show_all
+    station.trains.each {|train| puts "#{train.number} - #{train.class}"}
   end
 end
