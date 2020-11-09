@@ -27,8 +27,7 @@ class Train
     loop do 
       @speed -= 1         
       break if speed == 0
-    end
-    puts "Поезд остановлен"  
+    end 
   end 
 
   def set_route(route)      
@@ -66,7 +65,6 @@ class Train
   def validate!
     begin
       raise 'Invalid format of number! Please use format XXX-XX or XXXXX' if @number !~ TRAIN_NUMBER_FORMAT
-      
     end 
   end
 

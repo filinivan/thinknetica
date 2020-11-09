@@ -59,18 +59,15 @@ class Interface
   end
 
   def create_new_station
-    print 'Введите название станции: '
     name = gets.chomp
     @stations << Station.new(name)
   end
 
   def create_new_train
     begin
-      puts "Создаётся грузовой поезд? yes/no"
       cargo = gets.chomp
-      print 'Введите номер поезда '
       number = gets.chomp
-      if cargo == 'yes'
+      if cargo == 'y'
         @trains << TrainCargo.new(number)
       else
         @trains << TrainPassenger.new(number)
@@ -79,7 +76,6 @@ class Interface
       puts e.message
       retry
     end
-      puts "Поезд  с номером #{number} создан"
   end
 
   def create_new_route
@@ -88,28 +84,20 @@ class Interface
       puts "#{i} - #{station.name}"
       i += 1
     end 
-    puts 'Укажите начальную станцию '
     first = gets.to_i - 1
-    puts 'Укажите конечную станцию '
     last = gets.to_i - 1
     route = Route.new(@stations[first], @stations[last])
     @routes << route
   end
 
   def control_route
-    puts 'Выберите маршрут'
     show_routes
     route = @routes[gets.to_i - 1]
-    puts "Выбран маршрут #{route.name}"
-    puts "1. Добавить станцию\n2. Удалить станцию"
     answer = gets.chomp
     if answer == '1'
-      puts 'Какую станцию добавить в маршрут?'
       route.station_list
       route.station_add(@stations[gets.to_i - 1])
-      puts 'Станция успешно добавлена'
     elsif answer =='2'
-      puts 'Какую станцию вы хотите удалть из маршрута?'
       route.station_list
       route.station_del(route.stations[gets.to_i - 1])
     end
@@ -117,16 +105,12 @@ class Interface
 
   def set_route
     train = select_train
-
-    puts 'Выберите маршрут'
     show_routes
     train.set_route(@routes[gets.to_i - 1])
-    puts "Маршрут поезду #{train.number} успешно указан"
   end
 
   def wagons_hook
     train = select_train
-    print 'Сколько вагонов вы хотите добавить: '
     quantity = gets.to_i
     if train.class == TrainPassenger
       quantity.times do
@@ -141,7 +125,6 @@ class Interface
 
   def wagons_unhook
     train = select_train
-    print 'Сколько вагонов вы хотите отцепить: '
     quantity = gets.to_i
     quantity.times do
       train.wagons_unhook
@@ -150,8 +133,6 @@ class Interface
 
   def control_train
     train = select_train
-
-    puts "Отправить поезд #{train.number} на станцию\n1. Следующую\n2. Предыдущую"
     case gets.chomp
     when '1'
       train.move_forvard
@@ -161,7 +142,6 @@ class Interface
   end
 
   def select_train
-    puts 'Выберите поезд'
     trains
     train = @trains[gets.to_i - 1]
   end
@@ -183,7 +163,6 @@ class Interface
   end  
 
   def show_station_trains
-    puts 'Выберите станцию'
     show_stations
     station = @stations[gets.to_i - 1]
     station.show_all
