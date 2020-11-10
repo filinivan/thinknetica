@@ -4,6 +4,7 @@ class Interface
     @trains = []
     @routes = []
     @stations = []
+    @wagons = []
   end
 
   def start
@@ -59,9 +60,10 @@ class Interface
     @stations << Station.new('Omsk')
     @stations << Station.new('Kazan')
     @trains << TrainCargo.new('car-t1')
-    @trains << TrainCargo.new('car-t2')
     @trains << TrainPassenger.new('pas-t1')
-    @trains << TrainPassenger.new('pas-t2')
+
+
+
   end
 
   private
@@ -122,6 +124,11 @@ class Interface
 
   def wagons_hook
     train = select_train
+    puts 'Выберите вагон: '
+    @wagons.each.with_index(1) {|wagon, i| puts "#{i} - #{wagon.class}"}
+    wagon = @wagons[gets.to_i - 1]
+    
+    
     puts 'Введите количество вагонов: '
     quantity = gets.to_i
     if train.class == TrainPassenger
@@ -187,6 +194,14 @@ class Interface
   end
 
   def create_wagon
-    puts 
+    puts 'Грузовой или пассажирский? (cargo / passenger)'
+    answer = gets.chomp 
+    if answer == 'cargo'
+      @wagons << CargoWagon.new 500
+    elsif answer == 'passenger'
+      @wagons << PassengerWagon.new 120
+    else
+      raise 'Введено некорректное значение!'
+    end 
   end
 end

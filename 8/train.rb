@@ -59,6 +59,12 @@ class Train
     @wagons.delete_at(0) if @speed == 0
   end
 
+  def enum_wagons(&block)
+    @wagons.each do |wagon|
+      yield|wagon|
+    end  
+  end  
+
 
   protected
 

@@ -1,9 +1,10 @@
 class CargoWagon
-attr_reader :fill
-
+attr_reader :fill, :wagons
+@@wagons = []
   def initialize(volume)
     @volume = volume 
     @fill = 0
+    @@wagons << self
   end
 
   def filling(quantity)
