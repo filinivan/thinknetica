@@ -18,6 +18,7 @@ class Interface
       puts '8. Двигать поезд по маршруту'
       puts '9. Все станции на маршруте'
       puts '10. Показать все поезда на конкретной станции'
+      puts '11. Создать вагон'
       puts '0 Для выхода'
       puts 'Выберите пункт: '
 
@@ -44,12 +45,23 @@ class Interface
         show_stations_on_route
       when 10
         show_station_trains
+      when 11
+        create_wagon
       when 0
         break
       else
         puts 'Неверное значение!'
       end 
     end
+  end
+
+  def seed
+    @stations << Station.new('Omsk')
+    @stations << Station.new('Kazan')
+    @trains << TrainCargo.new('car-t1')
+    @trains << TrainCargo.new('car-t2')
+    @trains << TrainPassenger.new('pas-t1')
+    @trains << TrainPassenger.new('pas-t2')
   end
 
   private
@@ -173,7 +185,8 @@ class Interface
     station = @stations[gets.to_i - 1]
     station.trains.each {|train| puts "#{train.number} - #{train.class}"}
   end
+
+  def create_wagon
+    puts 
+  end
 end
-
-
- 
