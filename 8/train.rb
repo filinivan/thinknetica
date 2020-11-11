@@ -55,13 +55,13 @@ class Train
     @route.stations[@current_station_index - 1]
   end 
 
-  def wagons_unhook
-    @wagons.delete_at(0) if @speed == 0
+  def wagons_unhook(wagon)
+    @wagons.delete(wagon) if @speed == 0
   end
 
   def enum_wagons(&block)
-    @wagons.each do |wagon|
-      yield|wagon|
+    @wagons.each.with_index(1) do |wagon, i|
+      yield(wagon, i)
     end  
   end  
 

@@ -20,7 +20,7 @@ class Station
 
   def enum_trains(&block)
     @trains.each do |train|
-      yield|train|
+      yield(train)
     end
   end  
   
@@ -30,3 +30,5 @@ class Station
     raise 'Invalid station name' if name !~ STATION_NAME
   end
 end
+
+

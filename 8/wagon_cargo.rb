@@ -1,5 +1,5 @@
 class CargoWagon
-attr_reader :fill, :wagons
+attr_reader :fill, :wagons, :volume
 @@wagons = []
   def initialize(volume)
     @volume = volume 
@@ -17,7 +17,7 @@ attr_reader :fill, :wagons
 
   def free_space
     @volume - @fill
-  endf
+  end
 end
 
 

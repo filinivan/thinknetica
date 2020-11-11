@@ -20,6 +20,8 @@ class Interface
       puts '9. Все станции на маршруте'
       puts '10. Показать все поезда на конкретной станции'
       puts '11. Создать вагон'
+      puts '12. Показать информацию по всем поездам'
+      puts '13. Заполнить вагон'
       puts '0 Для выхода'
       puts 'Выберите пункт: '
 
@@ -48,6 +50,10 @@ class Interface
         show_station_trains
       when 11
         create_wagon
+      when 12
+        all_trains
+      when 13
+        fill_wagon
       when 0
         break
       else
@@ -61,7 +67,13 @@ class Interface
     @stations << Station.new('Kazan')
     @trains << TrainCargo.new('car-t1')
     @trains << TrainPassenger.new('pas-t1')
-
+    @trains[0].wagons_hook(CargoWagon.new(5000))
+    @trains[1].wagons_hook(PassengerWagon.new(220))
+    # @wagons << CargoWagon.new(500)
+    # @wagons << PassengerWagon.new(150)
+    @routes << Route.new(@stations[0], @stations[1])
+    @trains[0].set_route(@routes[0])
+    @trains[1].set_route(@routes[0])
 
 
   end
@@ -127,28 +139,22 @@ class Interface
     puts 'Выберите вагон: '
     @wagons.each.with_index(1) {|wagon, i| puts "#{i} - #{wagon.class}"}
     wagon = @wagons[gets.to_i - 1]
-    
-    
-    puts 'Введите количество вагонов: '
-    quantity = gets.to_i
-    if train.class == TrainPassenger
-      quantity.times do
-        train.wagons_hook(PassengerWagon.new)
-      end
-    else
-      quantity.times do
-        train.wagons_hook(CargoWagon.new)
-      end
+    if train.class == TrainPassenger && wagon.class == PassengerWagon
+        train.wagons_hook(wagon)
+        @wagons.delete(wagon)
+    elsif train.class == TrainCargo && wagon.class == CargoWagon
+        train.wagons_hook(wagon)
+        @wagons.delete(wagon)
     end
   end
 
   def wagons_unhook
     train = select_train
-    puts 'Введите количество вагонов: '
-    quantity = gets.to_i
-    quantity.times do
-      train.wagons_unhook
-    end
+    puts 'Выберите вагон: '
+    train.wagons.each.with_index(1) {|wagon, i| puts "#{i} - #{wagon.class}"}
+    wagon = train.wagons[gets.to_i - 1] 
+    @wagons << wagon
+    train.wagons_unhook(wagon)
   end
 
   def control_train
@@ -166,6 +172,12 @@ class Interface
     puts 'Выберите поезд: '
     trains
     train = @trains[gets.to_i - 1]
+  end
+
+  def select_wagon
+    puts 'Выберите вагон: '
+    @wagons.each.with_index(1) {|wagon, i| puts "#{i} - #{wagon.class}"}
+    @wagons[gets.to_i - 1]
   end
 
   def trains
@@ -193,15 +205,49 @@ class Interface
     station.trains.each {|train| puts "#{train.number} - #{train.class}"}
   end
 
+  def all_trains
+    @stations.each do |station|
+      puts "#{station.name} ......................"
+      station.enum_trains do |train| 
+        puts "Номер: #{train.number}, тип: #{train.class}, кол-во вагонов: #{train.wagons.length} "
+        train.enum_wagons do |wagon, i| 
+          if wagon.class == CargoWagon 
+            puts "#{i} - Тип вагона: #{wagon.class}, вместимость: #{wagon.volume} из них свободно #{wagon.free_space} "
+          elsif wagon.class == PassengerWagon
+            puts "#{i} - Тип вагона: #{wagon.class}, вместимость: #{wagon.passenger_seats.length} из них занято #{wagon.number_of_occupied_seats} "
+          end
+        end
+      end
+    end  
+  end
+
   def create_wagon
     puts 'Грузовой или пассажирский? (cargo / passenger)'
     answer = gets.chomp 
     if answer == 'cargo'
-      @wagons << CargoWagon.new 500
+      puts 'Введите объем: '
+      @wagons << CargoWagon.new(gets.to_i)
     elsif answer == 'passenger'
-      @wagons << PassengerWagon.new 120
+      puts 'Введите количество мест: '
+      @wagons << PassengerWagon.new(gets.to_i)
     else
       raise 'Введено некорректное значение!'
     end 
   end
+
+  def fill_wagon
+    train = select_train
+    puts 'Выберите вагон: '
+    train.wagons.each.with_index(1) {|wagon, i| puts "#{i} - #{wagon.class}"}
+    wagon = train.wagons[gets.to_i - 1]
+    if wagon.class == CargoWagon
+      puts "Введите количество: "
+      quantity = gets.to_i
+      wagon.filling(quantity)
+    elsif wagon.class == PassengerWagon
+      wagon.take_seat
+    end
+    puts "Готово!"
+  end  
+
 end
