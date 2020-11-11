@@ -19,10 +19,6 @@ class PassengerWagon
     @passenger_seats.count(1)
   end 
 
-  # def number_of_seats
-  #   @passenger_seats.length  
-  # end
-
 end
 
 

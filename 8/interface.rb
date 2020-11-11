@@ -69,8 +69,6 @@ class Interface
     @trains << TrainPassenger.new('pas-t1')
     @trains[0].wagons_hook(CargoWagon.new(5000))
     @trains[1].wagons_hook(PassengerWagon.new(220))
-    # @wagons << CargoWagon.new(500)
-    # @wagons << PassengerWagon.new(150)
     @routes << Route.new(@stations[0], @stations[1])
     @trains[0].set_route(@routes[0])
     @trains[1].set_route(@routes[0])
@@ -104,10 +102,8 @@ class Interface
   end
 
   def create_new_route
-    # i = 1
     @stations.each.with_index(1) do |station, i|
       puts "#{i} - #{station.name}"
-      # i += 1
     end 
     first = gets.to_i - 1
     last = gets.to_i - 1
