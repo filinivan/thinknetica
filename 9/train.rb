@@ -31,6 +31,7 @@ class Train
     end
   end
 
+  # rubocop:disable Naming/AccessorMethodName
   def set_route(route)
     @route = route
     # @current_station_index = 0
@@ -39,6 +40,7 @@ class Train
     @current_station.add_train(self)
   end
 
+  # rubocop:enable Naming/AccessorMethodName
   def move_forvard
     @current_station.del_train(self)
     @current_station = @route.stations[@current_station_index += 1]
@@ -70,6 +72,7 @@ class Train
   protected
 
   def validate!
-    raise 'Invalid format of number! Please use format XXX-XX or XXXXX' if @number !~ TRAIN_NUMBER_FORMAT
+    raise 'Invalid format of number! Please use format XXX-XX or XXXXX' \
+if @number !~ TRAIN_NUMBER_FORMAT
   end
 end

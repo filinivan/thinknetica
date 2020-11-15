@@ -6,7 +6,7 @@ Style/ExplicitBlockArgument:
     Enabled: false
 
 Layout/LineLength:
-  Max: 120
+  Max: 100
 
 Style/FrozenStringLiteralComment:
   Enabled: false

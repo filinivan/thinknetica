@@ -196,10 +196,11 @@ class Interface
         puts "Номер: #{train.number}, тип: #{train.class}, кол-во вагонов: #{train.wagons.length} "
         train.enum_wagons do |wagon, i|
           if wagon.instance_of?(CargoWagon)
-            puts "#{i} - Тип вагона: #{wagon.class}, вместимость: #{wagon.volume} из них свободно #{wagon.free_space} "
+            puts "#{i} - Тип вагона: #{wagon.class}, вместимость: #{wagon.volume} \
+из них свободно #{wagon.free_space} "
           elsif wagon.instance_of?(PassengerWagon)
-            puts "#{i} - Тип : #{wagon.class}, вместимость: #{wagon.passenger_seats.length}.
-                  Занято #{wagon.number_of_occupied_seats} "
+            puts "#{i} - Тип : #{wagon.class}, вместимость: #{wagon.passenger_seats.length} \
+Занято #{wagon.number_of_occupied_seats} "
           end
         end
       end
