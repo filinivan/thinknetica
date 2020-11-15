@@ -4,27 +4,17 @@ class Interface
     @routes = []
     @stations = []
     @wagons = []
+    @menu = %w[Создать_станцию Создать_поезд Создать_маршрут Управлять_маршрутом
+               Установить_маршрут Прицепить_вагон Отцепить_вагон Двигать_поезд_по_маршруту
+               Все_станции_на_маршруте Показать_все_поезда_на_станции Создать_вагон
+               Показать_информацию_по_всем_поездам Заполнить_вагон Выход]
   end
 
   def start
     loop do
-      puts '1. Создать станцию'
-      puts '2. Создать поезд'
-      puts '3. Создать маршрут'
-      puts '4. Управлять маршрутом'
-      puts '5. Установить маршрут'
-      puts '6. Прицепить вагон'
-      puts '7. Отцепить вагон'
-      puts '8. Двигать поезд по маршруту'
-      puts '9. Все станции на маршруте'
-      puts '10. Показать все поезда на конкретной станции'
-      puts '11. Создать вагон'
-      puts '12. Показать информацию по всем поездам'
-      puts '13. Заполнить вагон'
-      puts '0 Для выхода'
-      puts 'Выберите пункт: '
+      @menu.each.with_index(1) { |item, i| puts "#{i} - #{item}" }
 
-      input = gets.chomp.to_i
+      input = gets.to_i
 
       case input
       when 1
@@ -53,7 +43,7 @@ class Interface
         all_trains
       when 13
         fill_wagon
-      when 0
+      when 14
         break
       else
         puts 'Неверное значение!'
@@ -105,6 +95,7 @@ class Interface
   def control_route
     show_routes
     route = @routes[gets.to_i - 1]
+    puts '1 - Добавить станцию. 2 - Удалить станцию'
     answer = gets.to_i
     case answer
     when 1
@@ -159,7 +150,8 @@ class Interface
   def select_train
     puts 'Выберите поезд: '
     trains
-    train = @trains[gets.to_i - 1]
+    # train = @trains[gets.to_i - 1]
+    @trains[gets.to_i - 1]
   end
 
   def select_wagon
@@ -206,7 +198,8 @@ class Interface
           if wagon.instance_of?(CargoWagon)
             puts "#{i} - Тип вагона: #{wagon.class}, вместимость: #{wagon.volume} из них свободно #{wagon.free_space} "
           elsif wagon.instance_of?(PassengerWagon)
-            puts "#{i} - Тип вагона: #{wagon.class}, вместимость: #{wagon.passenger_seats.length} из них занято #{wagon.number_of_occupied_seats} "
+            puts "#{i} - Тип : #{wagon.class}, вместимость: #{wagon.passenger_seats.length}.
+                  Занято #{wagon.number_of_occupied_seats} "
           end
         end
       end

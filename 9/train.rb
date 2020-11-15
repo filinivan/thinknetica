@@ -33,8 +33,9 @@ class Train
 
   def set_route(route)
     @route = route
-    @current_station_index = 0
-    @current_station = @route.stations[@current_station_index]
+    # @current_station_index = 0
+    # @current_station = @route.stations[@current_station_index]
+    @current_station = @route.stations[0]
     @current_station.add_train(self)
   end
 
