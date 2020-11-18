@@ -1,3 +1,4 @@
+require_relative 'accessors'
 require_relative 'company'
 require_relative 'valid'
 require_relative 'instance_counter'
