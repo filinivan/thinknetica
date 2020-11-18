@@ -24,12 +24,12 @@ module Accessors
       end
     end
 
-    def strong_accessor(name, item_class)
+    def strong_accessor(name, type)
       var_name = "@#{name}".to_sym
       define_method(name) { instance_variable_get(var_name) }
 
       define_method("#{name}=".to_sym) do
-        if instance_variable_get(var_name).class == item_class 
+        if instance_variable_get(var_name).class == type 
           instance_variable_set(var_name, value)
         else
           raise 'Ошибка - несоответсвие типа переменной'
