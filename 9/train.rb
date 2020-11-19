@@ -71,8 +71,8 @@ class Train
 
   protected
 
-  def validate!
-    raise 'Invalid format of number! Please use format XXX-XX or XXXXX' \
-if @number !~ TRAIN_NUMBER_FORMAT
-  end
+#   def validate!
+#     raise 'Invalid format of number! Please use format XXX-XX or XXXXX' \
+# if @number !~ TRAIN_NUMBER_FORMAT
+#   end
 end

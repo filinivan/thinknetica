@@ -27,7 +27,7 @@ class Station
 
   protected
 
-  def validate!
-    raise 'Invalid station name' if name !~ STATION_NAME
-  end
+  # def validate!
+  #   raise 'Invalid station name' if name !~ STATION_NAME
+  # end
 end
