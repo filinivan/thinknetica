@@ -53,6 +53,7 @@ end
 module MyAttrAccessor
   def my_attr_accessor(name)
     var_name = "@#{name}".to_sym
+    
     define_method(name) { get_instance_variable(var_name) }
     define_method("#{name}=") do |value|
       set_insance_variable(var_name, value)
