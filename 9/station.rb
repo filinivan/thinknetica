@@ -1,6 +1,7 @@
 class Station
   attr_reader :name, :trains
 
+  include Validation
   include InstanceCounter
   STATION_NAME = /[[:upper:]]+[[:lower:]]/.freeze
 
@@ -8,7 +9,7 @@ class Station
     @name = name
     @trains = []
     register_instance
-    validate!
+    # validate!
   end
 
   def add_train(train)
@@ -24,8 +25,6 @@ class Station
       yield(train)
     end
   end
-
-  protected
 
   # def validate!
   #   raise 'Invalid station name' if name !~ STATION_NAME

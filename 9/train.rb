@@ -3,13 +3,13 @@ class Train
 
   include Company
   include InstanceCounter
-  include Valid
+  include Validation
   TRAIN_NUMBER_FORMAT = /^[[:alnum:]]{3}-?[[:alnum:]]{2}$/.freeze
   @@trains = {}
 
   def initialize(number)
     @number = number
-    validate!
+    # validate!
     @wagons = []
     @speed = 0
     @@trains[self.number] = self
@@ -69,10 +69,8 @@ class Train
     end
   end
 
-  protected
-
-#   def validate!
-#     raise 'Invalid format of number! Please use format XXX-XX or XXXXX' \
-# if @number !~ TRAIN_NUMBER_FORMAT
-#   end
+  #   def validate!
+  #     raise 'Invalid format of number! Please use format XXX-XX or XXXXX' \
+  # if @number !~ TRAIN_NUMBER_FORMAT
+  #   end
 end
